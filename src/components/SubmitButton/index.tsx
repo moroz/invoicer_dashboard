@@ -10,7 +10,7 @@ const SubmitButton: React.FC<Props> = ({ className, children, ...rest }) => {
       className={clsx(className, "button is-success")}
       type="submit"
     >
-      {children ?? "儲存更改"}
+      {children ?? "Submit"}
     </button>
   );
 };
