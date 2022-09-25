@@ -1,0 +1,42 @@
+@import ../../css/_variables
+
+.root
+  font-size: 1rem
+  user-select: none
+  display: inline-flex
+  align-items: center
+  line-height: 1.5rem
+  height: $input-height
+  border: 1px solid $primary
+  border-radius: 5px
+  cursor: pointer
+
+  span
+    display: inline-block
+    margin-left: .5em
+    padding-right: 1rem
+
+  input[type="radio"]
+    appearance: none
+    width: $custom-control-size
+    height: $custom-control-size
+    border-radius: 50%
+    border: 1px solid $primary
+    margin: 0 .5rem 0 .75rem
+    position: relative
+
+    &::after
+      content: ''
+      display: block
+      height: 0.5 * $custom-control-size
+      width: 0.5 * $custom-control-size
+      background: transparent
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      border-radius: 50%
+
+    &:checked
+      &::after
+        background: $primary

@@ -1,6 +1,5 @@
+import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import { mutation } from "svelte-apollo";
-import { useNavigate } from "svelte-navigator";
 import type { MutationResult } from "../interfaces/common";
 import type { User } from "../interfaces/users";
 
@@ -25,8 +24,8 @@ export interface SignInMutationVariables {
   password: string;
 }
 
-export const signInMutation = () =>
-  mutation<SignInMutationResult, SignInMutationVariables>(SIGN_IN, {
+export const useSignInMutation = () =>
+  useMutation<SignInMutationResult, SignInMutationVariables>(SIGN_IN, {
     refetchQueries: ["CurrentUser"],
     awaitRefetchQueries: true
   });
@@ -37,8 +36,8 @@ export const SIGN_OUT = gql`
   }
 `;
 
-export const signOutMutation = () => {
-  return mutation(SIGN_OUT, {
+export const useSignOutMutation = () => {
+  return useMutation(SIGN_OUT, {
     refetchQueries: ["CurrentUser"],
     awaitRefetchQueries: true
   });
