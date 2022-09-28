@@ -1,25 +1,55 @@
-import { SignInMutationVariables } from "@api/mutations/sessionMutations";
+import {
+  SignInMutationVariables,
+  useSignInMutation
+} from "@api/mutations/sessionMutations";
 import FormWrapper from "@components/FormWrapper";
 import InputField from "@components/InputField";
 import SubmitButton from "@components/SubmitButton";
+import useAuth from "@hooks/useAuth";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.sass";
 
 interface Props {}
 
 const LoginPage: React.FC<Props> = () => {
+  const [mutate, { error }] = useSignInMutation();
   const methods = useForm<SignInMutationVariables>();
   const { register } = methods;
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
+
+  const onSubmit = useCallback(async (data: SignInMutationVariables) => {
+    const result = await mutate({ variables: data });
+    if (result.data?.signIn.success) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className={styles.root}>
       <div className={clsx("card", styles.card)}>
         <div className="card-content">
-          <FormWrapper {...methods}>
+          <FormWrapper {...methods} onSubmit={onSubmit}>
+            {error ? (
+              <div className="notification is-warning">
+                {JSON.stringify(error)}
+              </div>
+            ) : null}
             <h1 className="title is-4 has-text-centered">Sign in</h1>
             <InputField label="Email:" {...register("email")} autoFocus />
-            <InputField label="Password:" {...register("password")} />
+            <InputField
+              label="Password:"
+              type="password"
+              {...register("password")}
+            />
             <SubmitButton className="is-fullwidth" />
           </FormWrapper>
         </div>
