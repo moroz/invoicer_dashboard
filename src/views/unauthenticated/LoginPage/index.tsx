@@ -1,10 +1,6 @@
-import {
-  SignInMutationVariables,
-  useSignInMutation
-} from "@api/mutations/sessionMutations";
-import FormWrapper from "@components/FormWrapper";
-import InputField from "@components/InputField";
-import SubmitButton from "@components/SubmitButton";
+import { SignInMutationVariables, useSignInMutation } from "@api/mutations";
+import { FormWrapper, InputField } from "@components/forms";
+import { SubmitButton } from "@components/buttons";
 import useAuth from "@hooks/useAuth";
 import clsx from "clsx";
 import React, { useCallback, useEffect } from "react";

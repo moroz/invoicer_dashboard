@@ -1,3 +1,4 @@
+import CompanyIndex from "@views/companies/CompanyIndex";
 import Dashboard from "@views/Dashboard";
 import LoginPage from "@views/unauthenticated/LoginPage";
 import React from "react";
@@ -10,6 +11,7 @@ const Router: React.FC<Props> = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/sign-in" element={<LoginPage />} />
+      <Route path="/companies" element={<CompanyIndex />} />
     </Routes>
   );
 };

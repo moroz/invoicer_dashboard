@@ -25,7 +25,7 @@ export interface CreateCompanyMutationVariables {
   params: CompanyParams;
 }
 
-export const useCreateCompanyMutation = useMutation<
-  CreateCompanyMutationResult,
-  CreateCompanyMutationVariables
->(CREATE_COMPANY);
+export const useCreateCompanyMutation = () =>
+  useMutation<CreateCompanyMutationResult, CreateCompanyMutationVariables>(
+    CREATE_COMPANY
+  );

@@ -1,6 +1,6 @@
 import { PAGINATION_FIELDS } from "@api/fragments";
 import { Company, CompanyFilterParams, PaginationPage } from "@api/interfaces";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 export const PAGINATE_COMPANIES = gql`
   ${PAGINATION_FIELDS}
@@ -26,3 +26,9 @@ export interface PaginateCompaniesQueryResult {
 export interface PaginateCompaniesQueryVariables {
   params: CompanyFilterParams;
 }
+
+export const usePaginateCompaniesQuery = (params: CompanyFilterParams) =>
+  useQuery<PaginateCompaniesQueryResult, PaginateCompaniesQueryVariables>(
+    PAGINATE_COMPANIES,
+    { variables: { params } }
+  );
