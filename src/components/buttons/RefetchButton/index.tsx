@@ -1,12 +1,10 @@
 import React from "react";
 import { ReactComponent as Icon } from "./rotate.svg";
-import IconButton, { ButtonProps } from "../IconButton";
+import IconButton, { BaseButtonProps, ButtonProps } from "../IconButton";
 
-interface Props extends Omit<ButtonProps, "icon"> {}
-
-const RefetchButton: React.FC<Props> = ({ children, ...props }) => {
+const RefetchButton: React.FC<ButtonProps> = ({ children, ...props }) => {
   return (
-    <IconButton {...(props as ButtonProps)} icon={Icon}>
+    <IconButton {...(props as BaseButtonProps)} icon={Icon}>
       {children ?? "Refresh"}
     </IconButton>
   );
