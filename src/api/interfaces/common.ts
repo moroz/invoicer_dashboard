@@ -15,3 +15,21 @@ export interface ErrorMutationResult {
 }
 
 export type MutationResult<T> = SuccessMutationResult<T> | ErrorMutationResult;
+
+export interface StandardPaginationParams {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+}
+
+export interface PageInfo {
+  totalPages: number;
+  totalEntries: number;
+  pageSize: number;
+  page: number;
+}
+
+export interface PaginationPage<T> {
+  data: T[];
+  pageInfo: PageInfo;
+}

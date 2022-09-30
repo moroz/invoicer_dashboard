@@ -1,3 +1,5 @@
+import { StandardPaginationParams } from "./common";
+
 export interface Company {
   id: string;
   name: string;
@@ -16,3 +18,5 @@ export interface CompanyParams {
   vatId: string;
   postalCode: string;
 }
+
+export interface CompanyFilterParams extends StandardPaginationParams {}
