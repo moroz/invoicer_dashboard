@@ -1,4 +1,4 @@
-import { PAGINATION_FIELDS } from "@api/fragments";
+import { COMPANY_DETAILS, PAGINATION_FIELDS } from "@api/fragments";
 import { Company, CompanyFilterParams, PaginationPage } from "@api/interfaces";
 import { gql, useQuery } from "@apollo/client";
 
@@ -32,3 +32,27 @@ export const usePaginateCompaniesQuery = (params: CompanyFilterParams) =>
     PAGINATE_COMPANIES,
     { variables: { params } }
   );
+
+export const GET_COMPANY = gql`
+  ${COMPANY_DETAILS}
+
+  query GetCompany($id: ID!) {
+    company(id: $id) {
+      ...CompanyDetails
+    }
+  }
+`;
+
+export interface GetCompanyQueryResult {
+  company: Company | null;
+}
+
+export interface GetCompanyQueryVariables {
+  id: string;
+}
+
+export const useGetCompanyQuery = (id: string | undefined) =>
+  useQuery<GetCompanyQueryResult, GetCompanyQueryVariables>(GET_COMPANY, {
+    variables: { id: id! },
+    skip: !id
+  });

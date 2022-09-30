@@ -13,7 +13,7 @@ const DataTable: React.FC<Props> = ({ children, clickable }) => {
       className={clsx(
         "table is-fullwidth is-bordered",
         styles.table,
-        clickable && styles.clickable
+        clickable && [styles.clickable, "is-hoverable"]
       )}
     >
       {children}

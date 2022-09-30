@@ -56,7 +56,7 @@ const Layout: React.FC<Props> = ({
             <div className={styles.title}>
               {backUrl ? (
                 <Link to={backUrl} className={styles.breadcrumb}>
-                  &lt;&lt; 返回上一頁
+                  &lt;&lt; Back
                 </Link>
               ) : null}
               {title ? <h1 className="title">{title}</h1> : null}
