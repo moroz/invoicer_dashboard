@@ -1,18 +1,18 @@
 import React, { useCallback } from "react";
 import Layout from "@views/Layout";
 import useParsedQuery from "@hooks/useParsedQuery";
-import { usePaginateCompaniesQuery } from "@api/queries";
+import { usePaginateClientsQuery } from "@api/queries";
 import Pagination from "@components/Pagination";
 import DataTable from "@components/DataTable";
 import { NewButton, RefetchButton, ButtonGroup } from "@components/buttons";
-import { Company } from "@api/interfaces";
+import { Client } from "@api/interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
-const CompanyIndex: React.FC<Props> = () => {
+const ClientIndex: React.FC<Props> = () => {
   const [{ page, q }] = useParsedQuery();
-  const { data, refetch } = usePaginateCompaniesQuery({
+  const { data, refetch } = usePaginateClientsQuery({
     page,
     q
   });
@@ -21,17 +21,17 @@ const CompanyIndex: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   const goTo = useCallback(
-    (company: Company) => () => navigate(`/companies/${company.id}`),
+    (client: Client) => () => navigate(`/clients/${client.id}`),
     [navigate]
   );
 
   return (
     <Layout
-      title="Companies"
+      title="Clients"
       actions={
         <ButtonGroup>
           <RefetchButton onClick={() => refetch()} />
-          <NewButton to="/companies/new" />
+          <NewButton to="/clients/new" />
         </ButtonGroup>
       }
     >
@@ -45,10 +45,10 @@ const CompanyIndex: React.FC<Props> = () => {
               </tr>
             </thead>
             <tbody>
-              {entries?.map((company) => (
-                <tr key={company.id} onClick={goTo(company)}>
-                  <td>{company.name}</td>
-                  <td>{company.vatId}</td>
+              {entries?.map((client) => (
+                <tr key={client.id} onClick={goTo(client)}>
+                  <td>{client.name}</td>
+                  <td>{client.vatId}</td>
                 </tr>
               ))}
             </tbody>
@@ -60,4 +60,4 @@ const CompanyIndex: React.FC<Props> = () => {
   );
 };
 
-export default CompanyIndex;
+export default ClientIndex;

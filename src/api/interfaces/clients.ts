@@ -1,6 +1,6 @@
 import { StandardPaginationParams } from "./common";
 
-export interface Company {
+export interface Client {
   id: string;
   name: string;
   addressLine: string;
@@ -11,7 +11,7 @@ export interface Company {
   updatedAt: string;
 }
 
-export interface CompanyParams {
+export interface ClientParams {
   name: string;
   addressLine: string;
   city: string;
@@ -19,4 +19,4 @@ export interface CompanyParams {
   postalCode: string;
 }
 
-export interface CompanyFilterParams extends StandardPaginationParams {}
+export interface ClientFilterParams extends StandardPaginationParams {}

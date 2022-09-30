@@ -1,38 +1,38 @@
 import React from "react";
 import Layout from "@views/Layout";
 import { useParams } from "react-router-dom";
-import { useGetCompanyQuery } from "@api/queries";
+import { useGetClientQuery } from "@api/queries";
 import { LayoutLoader } from "@views/Layout/Loader";
 import NotFound from "@views/NotFound";
 
 interface Props {}
 
-const CompanyDetails: React.FC<Props> = () => {
+const ClientDetails: React.FC<Props> = () => {
   const { id } = useParams();
-  const { data, loading } = useGetCompanyQuery(id);
-  const company = data?.company;
+  const { data, loading } = useGetClientQuery(id);
+  const client = data?.client;
   if (loading) return <LayoutLoader />;
-  if (!company) return <NotFound />;
+  if (!client) return <NotFound />;
 
   return (
     <Layout
-      title={company.name}
-      subtitle={`Company details`}
-      backUrl="/companies"
+      title={client.name}
+      subtitle={`Client details`}
+      backUrl="/clients"
     >
       <div className="card">
         <div className="card-content">
           <p>
             <strong>VAT ID:</strong>
             <br />
-            {company.vatId}
+            {client.vatId}
           </p>
           <section>
             <strong>Address:</strong>
             <p>
-              {company.addressLine}
+              {client.addressLine}
               <br />
-              {company.postalCode} {company.city}
+              {client.postalCode} {client.city}
             </p>
           </section>
         </div>
@@ -41,4 +41,4 @@ const CompanyDetails: React.FC<Props> = () => {
   );
 };
 
-export default CompanyDetails;
+export default ClientDetails;

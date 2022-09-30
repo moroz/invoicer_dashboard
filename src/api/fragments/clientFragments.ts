@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const COMPANY_DETAILS = gql`
-  fragment CompanyDetails on Company {
+export const CLIENT_DETAILS = gql`
+  fragment ClientDetails on Client {
     id
     name
     vatId

@@ -1,2 +1,2 @@
-export * from "./companyQueries";
+export * from "./clientQueries";
 export * from "./sessionQueries";

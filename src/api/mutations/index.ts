@@ -1,2 +1,2 @@
-export * from "./companyMutations";
+export * from "./clientMutations";
 export * from "./sessionMutations";
