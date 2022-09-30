@@ -3,3 +3,4 @@ export { default as RadioGroup } from "./RadioGroup";
 export { default as RadioButton } from "./RadioButton";
 export { default as FormWrapper } from "./FormWrapper";
 export { default as Textarea } from "./Textarea";
+export { default as InputGroup } from "./InputGroup";

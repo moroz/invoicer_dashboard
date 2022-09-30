@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 
 const ERROR_MESSAGES: Record<any, string> = {
-  required: "不能為空"
+  required: "can't be blank"
 };
 
 const ErrorMessageWrapper: typeof ErrorMessage = ({

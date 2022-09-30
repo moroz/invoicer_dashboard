@@ -1,10 +1,12 @@
 export interface ErrorObject {
   key: string;
   message: string;
+  validation: string;
 }
 
 export interface SuccessMutationResult<T> {
   success: true;
+  errors: ErrorObject[];
   data: T;
 }
 
