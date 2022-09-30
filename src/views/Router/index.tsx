@@ -5,6 +5,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import NotFound from "@views/NotFound";
 import CompanyDetails from "@views/companies/CompanyDetails";
+import NewCompany from "@views/companies/NewCompany";
 
 interface Props {}
 
@@ -14,6 +15,7 @@ const Router: React.FC<Props> = () => {
       <Route path="/" element={<Dashboard />} />
       <Route path="/sign-in" element={<LoginPage />} />
       <Route path="/companies" element={<CompanyIndex />} />
+      <Route path="/companies/new" element={<NewCompany />} />
       <Route path="/companies/:id" element={<CompanyDetails />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

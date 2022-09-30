@@ -4,7 +4,7 @@ import useParsedQuery from "@hooks/useParsedQuery";
 import { usePaginateCompaniesQuery } from "@api/queries";
 import Pagination from "@components/Pagination";
 import DataTable from "@components/DataTable";
-import { RefetchButton } from "@components/buttons";
+import { NewButton, RefetchButton, ButtonGroup } from "@components/buttons";
 import { Company } from "@api/interfaces";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,12 @@ const CompanyIndex: React.FC<Props> = () => {
   return (
     <Layout
       title="Companies"
-      actions={<RefetchButton onClick={() => refetch()} />}
+      actions={
+        <ButtonGroup>
+          <RefetchButton onClick={() => refetch()} />
+          <NewButton to="/companies/new" />
+        </ButtonGroup>
+      }
     >
       {data ? (
         <>

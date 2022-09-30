@@ -7,6 +7,8 @@ import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.sass";
+import ReactHelmet from "react-helmet";
+import { APP_NAME } from "@/config";
 
 interface Props {}
 
@@ -31,6 +33,9 @@ const LoginPage: React.FC<Props> = () => {
 
   return (
     <div className={styles.root}>
+      <ReactHelmet>
+        <title>Login | {APP_NAME}</title>
+      </ReactHelmet>
       <div className={clsx("card", styles.card)}>
         <div className="card-content">
           <FormWrapper {...methods} onSubmit={onSubmit}>
