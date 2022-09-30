@@ -5,7 +5,7 @@ import {
   UseFormReturn
 } from "react-hook-form";
 
-type Props<T> = UseFormReturn<T> & {
+type Props<T extends FieldValues> = UseFormReturn<T> & {
   onSubmit?: SubmitHandler<T>;
   children: React.ReactNode;
   className?: string;

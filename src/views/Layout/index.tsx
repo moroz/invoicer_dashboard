@@ -6,10 +6,9 @@ import styles from "./Layout.module.sass";
 import Sidebar from "./Sidebar";
 import { Helmet } from "react-helmet";
 import clsx from "clsx";
-// import NotFound from "../views/NotFound";
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
   subtitle?: string;
   backUrl?: string;
