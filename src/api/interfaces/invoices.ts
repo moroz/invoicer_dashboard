@@ -1,4 +1,5 @@
 import { Client, ClientParams } from "./clients";
+import { LineItemParams } from "./lineItems";
 
 export interface Invoice {
   id: string;
@@ -22,4 +23,6 @@ export interface InvoiceParams {
 
   buyerId: string | null;
   sellerId: string | null;
+
+  lineItems: LineItemParams[];
 }

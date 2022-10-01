@@ -6,10 +6,11 @@ import styles from "./InputField.module.sass";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   name: string;
-  label: string;
+  label?: string;
   helperText?: string;
   horizontal?: boolean;
   monospace?: boolean;
+  colSpan?: number;
 }
 
 const InputField = React.forwardRef(
@@ -23,6 +24,7 @@ const InputField = React.forwardRef(
       monospace,
       required,
       id = name,
+      colSpan,
       ...rest
     }: Props,
     ref: any
@@ -31,7 +33,7 @@ const InputField = React.forwardRef(
       formState: { errors }
     } = useFormContext();
 
-    const labelTag = (
+    const labelTag = label && (
       <label
         className={clsx("label", required && styles.required)}
         htmlFor={id}
@@ -64,9 +66,15 @@ const InputField = React.forwardRef(
       </>
     );
 
+    const style = {
+      "--input-col-span": String(colSpan)
+    } as React.CSSProperties;
+
     return (
       <div
+        style={style}
         className={clsx(
+          styles.root,
           "field input-field",
           { "has-error": errors[name], "is-horizontal": horizontal },
           monospace && "is-family-monospace",
