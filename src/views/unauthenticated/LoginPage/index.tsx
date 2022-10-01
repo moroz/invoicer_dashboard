@@ -45,10 +45,16 @@ const LoginPage: React.FC<Props> = () => {
               </div>
             ) : null}
             <h1 className="title is-4 has-text-centered">Sign in</h1>
-            <InputField label="Email:" {...register("email")} autoFocus />
+            <InputField
+              label="Email:"
+              {...register("email")}
+              autoFocus
+              required
+            />
             <InputField
               label="Password:"
               type="password"
+              required
               {...register("password")}
             />
             <SubmitButton className="is-fullwidth" />
