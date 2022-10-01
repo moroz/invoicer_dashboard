@@ -7,6 +7,9 @@ export interface Client {
   city: string;
   vatId: string;
   postalCode: string;
+  bankName: string | null;
+  bicCode: string | null;
+  accountNo: string | null;
   insertedAt: string;
   updatedAt: string;
 }
@@ -17,6 +20,9 @@ export interface ClientParams {
   city: string;
   vatId: string;
   postalCode: string;
+  bankName?: string | null;
+  bicCode?: string | null;
+  accountNo?: string | null;
 }
 
 export interface ClientFilterParams extends StandardPaginationParams {}

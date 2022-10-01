@@ -36,7 +36,12 @@ const InputField = React.forwardRef(
         className={clsx("label", required && styles.required)}
         htmlFor={id}
       >
-        {label}
+        {label}{" "}
+        {required ? (
+          ""
+        ) : (
+          <span className={styles.optionalText}>(optional)</span>
+        )}
       </label>
     );
 

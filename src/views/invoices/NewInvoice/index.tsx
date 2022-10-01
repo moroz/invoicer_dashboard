@@ -25,25 +25,32 @@ const NewInvoice: React.FC<Props> = () => {
             <InputField
               autoFocus
               label="Invoice no:"
-              {...register("invoiceNo")}
+              required
+              {...register("invoiceNo", { required: true })}
             />
             <InputField
               type="date"
+              required
               label="Date of issue:"
-              {...register("dateOfIssue")}
+              {...register("dateOfIssue", { required: true })}
             />
             <InputField
               type="date"
               label="Date of sale:"
+              required
               {...register("dateOfSale")}
             />
-            <InputField label="Place of issue:" {...register("placeOfIssue")} />
+            <InputField
+              required
+              label="Place of issue:"
+              {...register("placeOfIssue")}
+            />
           </InputGroup>
         </section>
-        <section className="columns mt-4">
+        <section className="columns mt-1">
           <div className="column">
             <h2 className="title is-4">Seller</h2>
-            <ClientFormFields prefix="seller." />
+            <ClientFormFields prefix="seller." showBankFields />
           </div>
           <div className="column">
             <h2 className="title is-4">Buyer</h2>
