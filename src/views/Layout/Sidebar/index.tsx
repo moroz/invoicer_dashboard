@@ -15,6 +15,7 @@ const Sidebar = () => {
       <nav>
         <SidebarLink to="/">Issue an invoice</SidebarLink>
         <SidebarLink to="/clients">Clients</SidebarLink>
+        <SidebarLink to="/invoices">Invoices</SidebarLink>
       </nav>
       <section className={styles.userData}>
         <p>Current user:</p>

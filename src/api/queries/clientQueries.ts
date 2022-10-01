@@ -33,7 +33,7 @@ export interface PaginateClientsQueryVariables {
 export const usePaginateClientsQuery = (params: ClientFilterParams) =>
   useQuery<PaginateClientsQueryResult, PaginateClientsQueryVariables>(
     PAGINATE_CLIENTS,
-    { variables: { params } }
+    { variables: { params }, fetchPolicy: "cache-and-network" }
   );
 
 export const GET_CLIENT = gql`
@@ -57,5 +57,6 @@ export interface GetClientQueryVariables {
 export const useGetClientQuery = (id: string | undefined) =>
   useQuery<GetClientQueryResult, GetClientQueryVariables>(GET_CLIENT, {
     variables: { id: id! },
-    skip: !id
+    skip: !id,
+    fetchPolicy: "cache-and-network"
   });

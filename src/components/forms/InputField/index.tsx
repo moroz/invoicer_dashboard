@@ -22,6 +22,7 @@ const InputField = React.forwardRef(
       horizontal,
       monospace,
       required,
+      id = name,
       ...rest
     }: Props,
     ref: any
@@ -31,7 +32,10 @@ const InputField = React.forwardRef(
     } = useFormContext();
 
     const labelTag = (
-      <label className={clsx("label", required && styles.required)}>
+      <label
+        className={clsx("label", required && styles.required)}
+        htmlFor={id}
+      >
         {label}
       </label>
     );
@@ -44,6 +48,7 @@ const InputField = React.forwardRef(
             errors[name] && "is-danger",
             monospace && "is-family-monospace"
           )}
+          id={id}
           name={name}
           required={required}
           {...rest}

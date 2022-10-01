@@ -49,7 +49,7 @@ const Layout: React.FC<Props> = ({
         </title>
       </Helmet>
       <Sidebar />
-      <main>
+      <main role="main">
         {header ? (
           <header>
             <div className={styles.title}>
