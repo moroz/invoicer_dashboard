@@ -5,6 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { InvoiceParams } from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import ClientFormFields from "@views/clients/FormFields";
+import VatRateSelect from "@components/forms/VatRateSelect";
 
 interface Props {}
 
@@ -62,7 +63,7 @@ const NewInvoice: React.FC<Props> = () => {
         <section className="mt-1">
           <h2 className="title is-4">Invoice entries</h2>
           {fields.map((field, number) => (
-            <InputGroup key={field.id} columns={5}>
+            <InputGroup key={field.id} columns={6}>
               <InputField
                 colSpan={2}
                 label="Name"
@@ -82,6 +83,10 @@ const NewInvoice: React.FC<Props> = () => {
                 label="Unit net price"
                 required
                 {...register(`lineItems.${number}.unitNetPrice`)}
+              />
+              <VatRateSelect
+                {...register(`lineItems.${number}.vatRate`)}
+                required
               />
             </InputGroup>
           ))}
