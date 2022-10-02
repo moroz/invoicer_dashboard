@@ -7,6 +7,8 @@ interface BaseProps {
   icon: React.FC;
   className?: string;
   children?: React.ReactNode;
+  download?: boolean | string;
+  target?: string;
 }
 
 export interface IconButtonProps extends BaseProps {
@@ -29,6 +31,16 @@ const IconButton: React.FC<BaseButtonProps> = ({
   ...props
 }) => {
   const classes = clsx("button", className, styles.button);
+
+  if ("to" in props && props.to?.match(/^https?:\/\//)) {
+    const rel = props.target === "_blank" ? "noopener noreferrer" : undefined;
+
+    return (
+      <a href={props.to} className={classes} rel={rel} {...props}>
+        <Icon /> {children}
+      </a>
+    );
+  }
 
   if ("to" in props && props.to) {
     return (

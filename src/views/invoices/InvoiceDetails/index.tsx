@@ -5,8 +5,13 @@ import { useGetInvoiceQuery } from "@api/queries";
 import { LayoutLoader } from "@views/Layout/Loader";
 import NotFound from "@views/NotFound";
 import { API_BASE_URL } from "@api/client";
+import { DownloadButton, PDFButton } from "@components/buttons";
 
 interface Props {}
+
+export const sanitizeFileName = (filename: string) => {
+  return filename.replace(/[\/\\\"\'\$\^\*]+/g, "-");
+};
 
 const InvoiceDetails: React.FC<Props> = () => {
   const { id } = useParams();
@@ -16,18 +21,17 @@ const InvoiceDetails: React.FC<Props> = () => {
   if (loading) return <LayoutLoader />;
   if (!invoice) return <NotFound />;
 
+  const pdfURL = `${API_BASE_URL}/invoices/${invoice.id}`;
+
   return (
     <Layout
       title={invoice.invoiceNo}
       subtitle="Invoice details"
       actions={
-        <a
-          href={`${API_BASE_URL}/invoices/${invoice.id}`}
-          target="_blank"
-          className="button"
-        >
-          PDF
-        </a>
+        <>
+          <PDFButton to={pdfURL} target="_blank" />
+          <DownloadButton to={pdfURL + "?download=true"} />
+        </>
       }
       backUrl="/invoices"
     ></Layout>
