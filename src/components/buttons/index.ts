@@ -3,6 +3,7 @@ import { ReactComponent as PlusIcon } from "./plus.svg";
 import { ReactComponent as RefetchIcon } from "./rotate.svg";
 import { ReactComponent as PDFIcon } from "./file-pdf.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
+import { ReactComponent as XmarkIcon } from "./xmark.svg";
 
 export { default as IconButton, makeIconButton } from "./IconButton";
 export { default as SubmitButton } from "./SubmitButton";
@@ -27,4 +28,10 @@ export const PDFButton = makeIconButton({
 export const DownloadButton = makeIconButton({
   icon: DownloadIcon,
   defaultChildren: "Download"
+});
+
+export const DeleteButton = makeIconButton({
+  overrideClassName: "is-danger",
+  icon: XmarkIcon,
+  defaultChildren: "Remove"
 });

@@ -9,27 +9,37 @@ import {
   LocaleSelect
 } from "@components/forms";
 import { useFieldArray, useForm } from "react-hook-form";
-import { InvoiceParams } from "@api/interfaces";
+import { InvoiceParams, LineItemParams } from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import ClientFormFields from "@views/clients/FormFields";
 import { PaymentMethodSelect, VatRateSelect } from "@components/forms";
-import { SubmitButton } from "@components/buttons";
+import { DeleteButton, NewButton, SubmitButton } from "@components/buttons";
 import { useCreateInvoiceMutation } from "@api/mutations";
 import { useNavigate } from "react-router-dom";
 import { setFormErrors } from "@/lib/formHelpers";
 
 interface Props {}
 
+const EMPTY_LINE_ITEM: LineItemParams = {
+  quantity: 1,
+  description: "",
+  vatRate: "TWENTY_THREE",
+  unitNetPrice: 0
+};
+
 const NewInvoice: React.FC<Props> = () => {
   const methods = useForm<InvoiceParams>({
     defaultValues: {
       dateOfIssue: today(),
       dateOfSale: today(),
-      lineItems: [{ quantity: 1, description: "", vatRate: "TWENTY_THREE" }]
+      lineItems: [EMPTY_LINE_ITEM]
     }
   });
   const { register, control, setError } = methods;
-  const { fields, append } = useFieldArray({ control, name: "lineItems" });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "lineItems"
+  });
   const [mutate] = useCreateInvoiceMutation();
   const navigate = useNavigate();
 
@@ -91,12 +101,12 @@ const NewInvoice: React.FC<Props> = () => {
             <ClientFormFields prefix="buyer." />
           </div>
         </section>
-        <section className="mt-1">
+        <section className="mt-1 mb-5">
           <h2 className="title is-4">Invoice entries</h2>
           {fields.map((field, number) => (
-            <InputGroup key={field.id} columns={6}>
+            <InputGroup key={field.id} columns={9} gap="1rem">
               <InputField
-                colSpan={2}
+                colSpan={4}
                 label="Name"
                 required
                 {...register(`lineItems.${number}.description`)}
@@ -119,8 +129,12 @@ const NewInvoice: React.FC<Props> = () => {
                 {...register(`lineItems.${number}.vatRate`)}
                 required
               />
+              {fields.length > 1 && (
+                <DeleteButton onClick={() => remove(number)} className="mb-3" />
+              )}
             </InputGroup>
           ))}
+          <NewButton onClick={() => append(EMPTY_LINE_ITEM)} />
         </section>
         <SubmitButton>Save invoice</SubmitButton>
       </FormWrapper>
