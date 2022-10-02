@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { EventHandler } from "react";
 import styles from "./IconButton.module.sass";
-import { Link, LinkProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface BaseProps {
   icon: React.FC;
@@ -47,8 +47,26 @@ const IconButton: React.FC<BaseButtonProps> = ({
 
 export default IconButton;
 
-const makeIconButton= (Icon: React.FC, className?: string)  => {
-  return ({ children, ...props }: ButtonProps) => {
-    <IconButton {...props as BaseButtonProps} icon={Icon}
-  }
+export interface MakeIconButtonParams {
+  icon: React.FC;
+  overrideClassName?: string;
+  defaultChildren?: string;
 }
+
+export const makeIconButton = ({
+  icon: Icon,
+  overrideClassName,
+  defaultChildren
+}: MakeIconButtonParams) => {
+  return ({ children, className, ...props }: ButtonProps) => {
+    return (
+      <IconButton
+        {...(props as BaseButtonProps)}
+        className={clsx(overrideClassName, className)}
+        icon={Icon}
+      >
+        {children ?? defaultChildren}
+      </IconButton>
+    );
+  };
+};
