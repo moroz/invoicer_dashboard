@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Layout from "@views/Layout";
-import { FormWrapper, InputField, InputGroup } from "@components/forms";
+import {
+  CurrencySelect,
+  FormWrapper,
+  InputField,
+  InputGroup,
+  InvoiceTypeSelect,
+  LocaleSelect
+} from "@components/forms";
 import { useFieldArray, useForm } from "react-hook-form";
 import { InvoiceParams } from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import ClientFormFields from "@views/clients/FormFields";
-import VatRateSelect from "@components/forms/VatRateSelect";
+import { PaymentMethodSelect, VatRateSelect } from "@components/forms";
+import { SubmitButton } from "@components/buttons";
+import { useCreateInvoiceMutation } from "@api/mutations";
+import { useNavigate } from "react-router-dom";
+import { setFormErrors } from "@/lib/formHelpers";
 
 interface Props {}
 
@@ -14,15 +25,29 @@ const NewInvoice: React.FC<Props> = () => {
     defaultValues: {
       dateOfIssue: today(),
       dateOfSale: today(),
-      lineItems: [{ quantity: 1, description: "" }]
+      lineItems: [{ quantity: 1, description: "", vatRate: "TWENTY_THREE" }]
     }
   });
-  const { register, control } = methods;
+  const { register, control, setError } = methods;
   const { fields, append } = useFieldArray({ control, name: "lineItems" });
+  const [mutate] = useCreateInvoiceMutation();
+  const navigate = useNavigate();
+
+  const onSubmit = useCallback(
+    async (params: InvoiceParams) => {
+      const res = await mutate({ variables: { params } });
+      if (res.data?.result.success) {
+        navigate(`/invoices/${res.data.result.data.id}`);
+      } else {
+        setFormErrors(setError, res.data?.result.errors);
+      }
+    },
+    [mutate]
+  );
 
   return (
     <Layout title="Issue an invoice">
-      <FormWrapper {...methods}>
+      <FormWrapper {...methods} onSubmit={onSubmit}>
         <section>
           <InputGroup columns={4}>
             <InputField
@@ -48,6 +73,12 @@ const NewInvoice: React.FC<Props> = () => {
               label="Place of issue:"
               {...register("placeOfIssue")}
             />
+          </InputGroup>
+          <InputGroup columns={4}>
+            <InvoiceTypeSelect required {...register("invoiceType")} />
+            <PaymentMethodSelect required {...register("paymentMethod")} />
+            <LocaleSelect required {...register("locale.0")} />
+            <CurrencySelect required {...register("currency")} />
           </InputGroup>
         </section>
         <section className="columns mt-1">
@@ -91,6 +122,7 @@ const NewInvoice: React.FC<Props> = () => {
             </InputGroup>
           ))}
         </section>
+        <SubmitButton>Save invoice</SubmitButton>
       </FormWrapper>
     </Layout>
   );

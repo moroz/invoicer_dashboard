@@ -1,6 +1,6 @@
 import { INVOICE_DETAILS } from "@api/fragments";
 import { Invoice, InvoiceParams, MutationResult } from "@api/interfaces";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 export const CREATE_INVOICE = gql`
   ${INVOICE_DETAILS}
@@ -26,3 +26,8 @@ export interface CreateInvoiceMutationResult {
 export interface CreateInvoiceMutationVariables {
   params: InvoiceParams;
 }
+
+export const useCreateInvoiceMutation = () =>
+  useMutation<CreateInvoiceMutationResult, CreateInvoiceMutationVariables>(
+    CREATE_INVOICE
+  );

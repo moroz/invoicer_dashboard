@@ -5,7 +5,7 @@ import { useGetInvoiceQuery } from "@api/queries";
 import { LayoutLoader } from "@views/Layout/Loader";
 import NotFound from "@views/NotFound";
 import { API_BASE_URL } from "@api/client";
-import { DownloadButton, PDFButton } from "@components/buttons";
+import { ButtonGroup, DownloadButton, PDFButton } from "@components/buttons";
 
 interface Props {}
 
@@ -28,10 +28,10 @@ const InvoiceDetails: React.FC<Props> = () => {
       title={invoice.invoiceNo}
       subtitle="Invoice details"
       actions={
-        <>
+        <ButtonGroup>
           <PDFButton to={pdfURL} target="_blank" />
           <DownloadButton to={pdfURL + "?download=true"} />
-        </>
+        </ButtonGroup>
       }
       backUrl="/invoices"
     ></Layout>

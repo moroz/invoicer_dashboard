@@ -5,7 +5,7 @@ export interface SelectOption {
   label: string;
 }
 
-interface Props extends React.HTMLProps<HTMLSelectElement> {
+export interface SelectProps extends React.HTMLProps<HTMLSelectElement> {
   options: SelectOption[];
   placeholder?: string;
   label?: string;
@@ -13,7 +13,7 @@ interface Props extends React.HTMLProps<HTMLSelectElement> {
 
 const Select = React.forwardRef(
   (
-    { options, name, label, placeholder, id = name, ...props }: Props,
+    { options, name, label, placeholder, id = name, ...props }: SelectProps,
     ref: any
   ) => {
     return (
