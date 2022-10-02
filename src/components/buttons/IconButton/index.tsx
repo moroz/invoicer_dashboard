@@ -46,3 +46,9 @@ const IconButton: React.FC<BaseButtonProps> = ({
 };
 
 export default IconButton;
+
+const makeIconButton= (Icon: React.FC, className?: string)  => {
+  return ({ children, ...props }: ButtonProps) => {
+    <IconButton {...props as BaseButtonProps} icon={Icon}
+  }
+}
