@@ -49,7 +49,8 @@ const InvoiceIndex: React.FC<Props> = () => {
             <tr key={invoice.id} onClick={goTo(invoice)}>
               <td>{invoice.invoiceNo}</td>
               <td>
-                {invoice.buyer.name} ({invoice.buyer.vatId})
+                {invoice.buyer.name}
+                {invoice.buyer.vatId && ` (${invoice.buyer.vatId})`}
               </td>
               <td>{formatPrice(invoice.grossTotal, invoice.currency)}</td>
             </tr>
