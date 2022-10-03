@@ -3,8 +3,12 @@ import {
   calculateVatValue,
   sanitizeNumericValue
 } from "@/lib/calculations";
-import { InvoiceParams, VAT_RATE_NUMBERS } from "@api/interfaces";
-import { DeleteButton } from "@components/buttons";
+import {
+  InvoiceParams,
+  LineItemParams,
+  VAT_RATE_NUMBERS
+} from "@api/interfaces";
+import { DeleteButton, NewButton } from "@components/buttons";
 import { InputField, VatRateSelect } from "@components/forms";
 import clsx from "clsx";
 import React from "react";
@@ -13,25 +17,40 @@ import styles from "./LineItemEditor.module.sass";
 
 interface Props {}
 
+const EMPTY_LINE_ITEM: LineItemParams = {
+  quantity: 1,
+  description: "",
+  vatRate: "TWENTY_THREE",
+  unitNetPrice: 0
+};
+
 const LineItemEditor: React.FC<Props> = () => {
-  const { register, control, watch } = useFormContext<InvoiceParams>();
+  const { register, control, watch, setValue } =
+    useFormContext<InvoiceParams>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "lineItems"
   });
 
+  const setNumericValue = (name: string) => (e: any) => {
+    const value = e.target.value;
+    setValue(name as any, sanitizeNumericValue(value));
+  };
+
   return (
     <table className={clsx("table is-fullwidth is-bordered", styles.table)}>
       <thead>
-        <th className={styles.id}>#</th>
-        <th>Name</th>
-        <th>Unit</th>
-        <th>Quantity</th>
-        <th>Unit net price</th>
-        <th>Vat rate</th>
-        <th>Vat amount</th>
-        <th>Gross subtotal</th>
-        <th></th>
+        <tr>
+          <th className={styles.id}>#</th>
+          <th className={styles.name}>Name</th>
+          <th className={styles.narrow}>Unit</th>
+          <th className={styles.narrow}>Quantity</th>
+          <th className={styles.narrow}>Unit price</th>
+          <th className={styles.narrow}>Vat rate</th>
+          <th className={styles.amount}>Vat amount</th>
+          <th className={styles.amount}>Gross subtotal</th>
+          <th className={styles.buttons}></th>
+        </tr>
       </thead>
       <tbody>
         {fields.map((field, number) => {
@@ -49,28 +68,29 @@ const LineItemEditor: React.FC<Props> = () => {
             <tr key={field.id}>
               <td className={styles.id}>{number + 1}</td>
               <td className={styles.input}>
-                <InputField
-                  colSpan={4}
+                <input
                   required
                   {...register(`lineItems.${number}.description`)}
                 />
               </td>
-              <td className={styles.input}>
-                <InputField {...register(`lineItems.${number}.unit`)} />
+              <td className={clsx(styles.input, styles.narrow)}>
+                <input {...register(`lineItems.${number}.unit`)} />
               </td>
-              <td className={styles.input}>
-                <InputField
+              <td className={clsx(styles.input, styles.narrow)}>
+                <input
                   required
                   {...register(`lineItems.${number}.quantity`, {
-                    setValueAs: sanitizeNumericValue
+                    setValueAs: sanitizeNumericValue,
+                    onBlur: setNumericValue(`lineItems.${number}.quantity`)
                   })}
                 />
               </td>
-              <td className={styles.input}>
-                <InputField
+              <td className={clsx(styles.input, styles.narrow)}>
+                <input
                   required
                   {...register(`lineItems.${number}.unitNetPrice`, {
-                    setValueAs: sanitizeNumericValue
+                    setValueAs: sanitizeNumericValue,
+                    onBlur: setNumericValue(`lineItems.${number}.unitNetPrice`)
                   })}
                 />
               </td>
@@ -82,12 +102,13 @@ const LineItemEditor: React.FC<Props> = () => {
               </td>
               <td>{vatAmount.toFixed(2)}</td>
               <td>{gross.toFixed(2)}</td>
-              <td>
+              <td className={styles.buttons}>
+                <NewButton
+                  onClick={() => append(EMPTY_LINE_ITEM)}
+                  children=""
+                />
                 {fields.length > 1 && (
-                  <DeleteButton
-                    onClick={() => remove(number)}
-                    className="mb-3"
-                  />
+                  <DeleteButton children="" onClick={() => remove(number)} />
                 )}
               </td>
             </tr>

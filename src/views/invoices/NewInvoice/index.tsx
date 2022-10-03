@@ -8,12 +8,12 @@ import {
   InvoiceTypeSelect,
   LocaleSelect
 } from "@components/forms";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { InvoiceParams, LineItemParams } from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import ClientFormFields from "@views/clients/FormFields";
-import { PaymentMethodSelect, VatRateSelect } from "@components/forms";
-import { DeleteButton, NewButton, SubmitButton } from "@components/buttons";
+import { PaymentMethodSelect } from "@components/forms";
+import { SubmitButton } from "@components/buttons";
 import { useCreateInvoiceMutation } from "@api/mutations";
 import { useNavigate } from "react-router-dom";
 import { setFormErrors } from "@/lib/formHelpers";
@@ -36,11 +36,7 @@ const NewInvoice: React.FC<Props> = () => {
       lineItems: [EMPTY_LINE_ITEM]
     }
   });
-  const { register, control, setError } = methods;
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "lineItems"
-  });
+  const { register, setError } = methods;
   const [mutate] = useCreateInvoiceMutation();
   const navigate = useNavigate();
 

@@ -1,17 +1,60 @@
+@import @css/variables
+
 .table
   table-layout: fixed
 
   tbody
-    td.input
+    td
+      height: $input-height
+      line-height: 0
+      vertical-align: middle
+
+    td.input, td.buttons
       padding: 0
+      position: relative
 
-      input
-        border: 0
-        border-radius: 0
+      :global
+        input, select, .select
+          border: 0
+          border-radius: 0
+          height: 100%
 
-      select
-        border: 0
+          &:focus
+            background: $table-row-hover-background-color
+            outline: 0
+            box-shadow: none
+
+    input
+      position: absolute
+      display: inline-block
+      width: 100%
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      border-radius: 0
+      font-size: 1em
+      padding: 0 .5em
+
+      &:not(:focus)
+        background: transparent
+
+  button
+    border-radius: 0
+    margin: 0
 
   .id
     width: 3.5rem
     text-align: center !important
+
+  .narrow
+    width: 6rem
+    text-align: center !important
+    input
+      text-align: center
+
+  .amount
+    width: 9rem
+
+  .buttons
+    width: 10rem

@@ -5,7 +5,7 @@ function normalizeNumber(raw: string | number) {
   if (typeof raw === "number") {
     return Big(raw);
   }
-  if (typeof raw === "string") {
+  if (typeof raw === "string" && raw) {
     return Big(raw.replace(",", "."));
   }
   return Big(0);

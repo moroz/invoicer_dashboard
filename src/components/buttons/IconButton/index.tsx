@@ -77,7 +77,7 @@ export const makeIconButton = ({
         className={clsx(overrideClassName, className)}
         icon={Icon}
       >
-        {children ?? defaultChildren}
+        {children === undefined ? defaultChildren : children}
       </IconButton>
     );
   };
