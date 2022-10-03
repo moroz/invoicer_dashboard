@@ -1,3 +1,8 @@
+import {
+  calculateGross,
+  calculateVatValue,
+  sanitizeNumericValue
+} from "@/lib/calculations";
 import { InvoiceParams, VAT_RATE_NUMBERS } from "@api/interfaces";
 import { DeleteButton } from "@components/buttons";
 import { InputField, VatRateSelect } from "@components/forms";
@@ -30,13 +35,15 @@ const LineItemEditor: React.FC<Props> = () => {
       </thead>
       <tbody>
         {fields.map((field, number) => {
-          const unitNetPrice = Number(
-            watch(`lineItems.${number}.unitNetPrice`)
-          );
+          const unitNetPrice = watch(
+            `lineItems.${number}.unitNetPrice`
+          ) as string;
           const vatRate = watch(`lineItems.${number}.vatRate`);
-          const quantity = Number(watch(`lineItems.${number}.quantity`));
-          const vatAmount = unitNetPrice * quantity * VAT_RATE_NUMBERS[vatRate];
-          const gross = unitNetPrice * quantity + vatAmount;
+          const quantity = watch(
+            `lineItems.${number}.quantity`
+          ) as unknown as string;
+          const vatAmount = calculateVatValue(unitNetPrice, quantity, vatRate);
+          const gross = calculateGross(unitNetPrice, quantity, vatRate);
 
           return (
             <tr key={field.id}>
@@ -54,13 +61,17 @@ const LineItemEditor: React.FC<Props> = () => {
               <td className={styles.input}>
                 <InputField
                   required
-                  {...register(`lineItems.${number}.quantity`)}
+                  {...register(`lineItems.${number}.quantity`, {
+                    setValueAs: sanitizeNumericValue
+                  })}
                 />
               </td>
               <td className={styles.input}>
                 <InputField
                   required
-                  {...register(`lineItems.${number}.unitNetPrice`)}
+                  {...register(`lineItems.${number}.unitNetPrice`, {
+                    setValueAs: sanitizeNumericValue
+                  })}
                 />
               </td>
               <td className={styles.input}>
@@ -69,8 +80,8 @@ const LineItemEditor: React.FC<Props> = () => {
                   required
                 />
               </td>
-              <td>{vatAmount}</td>
-              <td>{gross}</td>
+              <td>{vatAmount.toFixed(2)}</td>
+              <td>{gross.toFixed(2)}</td>
               <td>
                 {fields.length > 1 && (
                   <DeleteButton
