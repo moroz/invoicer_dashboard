@@ -17,6 +17,7 @@ import { DeleteButton, NewButton, SubmitButton } from "@components/buttons";
 import { useCreateInvoiceMutation } from "@api/mutations";
 import { useNavigate } from "react-router-dom";
 import { setFormErrors } from "@/lib/formHelpers";
+import LineItemEditor from "@components/LineItemEditor";
 
 interface Props {}
 
@@ -101,41 +102,7 @@ const NewInvoice: React.FC<Props> = () => {
             <ClientFormFields prefix="buyer." />
           </div>
         </section>
-        <section className="mt-1 mb-5">
-          <h2 className="title is-4">Invoice entries</h2>
-          {fields.map((field, number) => (
-            <InputGroup key={field.id} columns={9} gap="1rem">
-              <InputField
-                colSpan={4}
-                label="Name"
-                required
-                {...register(`lineItems.${number}.description`)}
-              />
-              <InputField
-                label="Unit"
-                {...register(`lineItems.${number}.unit`)}
-              />
-              <InputField
-                label="Quantity"
-                required
-                {...register(`lineItems.${number}.quantity`)}
-              />
-              <InputField
-                label="Unit net price"
-                required
-                {...register(`lineItems.${number}.unitNetPrice`)}
-              />
-              <VatRateSelect
-                {...register(`lineItems.${number}.vatRate`)}
-                required
-              />
-              {fields.length > 1 && (
-                <DeleteButton onClick={() => remove(number)} className="mb-3" />
-              )}
-            </InputGroup>
-          ))}
-          <NewButton onClick={() => append(EMPTY_LINE_ITEM)} />
-        </section>
+        <LineItemEditor />
         <SubmitButton>Save invoice</SubmitButton>
       </FormWrapper>
     </Layout>
