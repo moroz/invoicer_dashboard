@@ -9,6 +9,7 @@ import NewClient from "@views/clients/NewClient";
 import InvoiceIndex from "@views/invoices/InvoiceIndex";
 import NewInvoice from "@views/invoices/NewInvoice";
 import InvoiceDetails from "@views/invoices/InvoiceDetails";
+import SignUp from "@views/unauthenticated/SignUp";
 
 interface Props {}
 
@@ -17,6 +18,7 @@ const Router: React.FC<Props> = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/sign-in" element={<LoginPage />} />
+      <Route path="/sign-up" element={<SignUp />} />
       <Route path="/clients" element={<ClientIndex />} />
       <Route path="/clients/new" element={<NewClient />} />
       <Route path="/clients/:id" element={<ClientDetails />} />

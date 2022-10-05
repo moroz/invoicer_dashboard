@@ -4,7 +4,7 @@ import styles from "./Loader.module.sass";
 const Loader = () => {
   return (
     <div className={styles.root}>
-      <h1 className="title">加載中</h1>
+      <h1 className="title">Loading...</h1>
     </div>
   );
 };

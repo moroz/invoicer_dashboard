@@ -35,7 +35,7 @@ const InputField = React.forwardRef(
 
     const labelTag = label && (
       <label
-        className={clsx("label", required && styles.required)}
+        className={clsx("label", required && styles.required, styles.label)}
         htmlFor={id}
       >
         {label}{" "}
@@ -44,6 +44,9 @@ const InputField = React.forwardRef(
         ) : (
           <span className={styles.optionalText}>(optional)</span>
         )}
+        {helperText ? (
+          <span className={clsx("help", styles.help)}>{helperText}</span>
+        ) : null}
       </label>
     );
 
@@ -62,7 +65,6 @@ const InputField = React.forwardRef(
           ref={ref}
         />
         <ErrorMessage name={name} errors={errors} />
-        {helperText ? <span className="helper-text">{helperText}</span> : null}
       </>
     );
 
@@ -74,8 +76,8 @@ const InputField = React.forwardRef(
       <div
         style={style}
         className={clsx(
-          styles.root,
           "field input-field",
+          styles.root,
           { "has-error": errors[name], "is-horizontal": horizontal },
           monospace && "is-family-monospace",
           className
