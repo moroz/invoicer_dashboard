@@ -15,7 +15,7 @@ const ErrorMessageWrapper: typeof ErrorMessage = ({
   return (
     <ErrorMessage
       as="span"
-      className="error-explanation"
+      className="error-explanation help is-danger"
       errors={errors}
       name={name}
       message={error.message || ERROR_MESSAGES[error.type]}

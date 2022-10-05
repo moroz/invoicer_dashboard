@@ -60,7 +60,6 @@ const InputField = React.forwardRef(
           )}
           id={id}
           name={name}
-          required={required}
           {...rest}
           ref={ref}
         />

@@ -1,29 +1,40 @@
+import { setFormErrors } from "@/lib/formHelpers";
 import { SignUpParams } from "@api/interfaces";
+import { useSignUpMutation } from "@api/mutations";
 import { SubmitButton } from "@components/buttons";
 import { FormWrapper, InputField } from "@components/forms";
 import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../Layout";
 
 interface Props {}
 
 const SignUp: React.FC<Props> = () => {
   const methods = useForm<SignUpParams>();
-  const { register, watch } = methods;
+  const { register, setError } = methods;
+  const [mutate] = useSignUpMutation();
+  const navigate = useNavigate();
 
-  const onSubmit = useCallback(async (params: SignUpParams) => {}, []);
+  const onSubmit = useCallback(async (params: SignUpParams) => {
+    const result = await mutate({ variables: { params } });
+    if (result.data?.result.success) {
+      navigate("/sign-in");
+    } else {
+      setFormErrors(setError, result.data?.result.errors);
+    }
+  }, []);
 
   return (
     <Layout title="Sign up">
-      <FormWrapper {...methods}>
+      <FormWrapper {...methods} onSubmit={onSubmit}>
         <h1 className="title is-4 has-text-centered">Sign up</h1>
         <p>
           Already have an account? <Link to="/sign-in">Sign in</Link>
         </p>
         <InputField
           label="Email:"
-          {...register("email")}
+          {...register("email", { required: true })}
           autoFocus
           autoCapitalize="none"
           autoCorrect="off"
@@ -37,14 +48,14 @@ const SignUp: React.FC<Props> = () => {
           type="password"
           autoComplete="new-password"
           required
-          {...register("password")}
+          {...register("password", { required: true })}
         />
         <InputField
           label="Confirm password:"
           type="password"
           autoComplete="new-password"
           required
-          {...register("password")}
+          {...register("passwordConfirmation", { required: true })}
         />
         <SubmitButton>Register</SubmitButton>
       </FormWrapper>
