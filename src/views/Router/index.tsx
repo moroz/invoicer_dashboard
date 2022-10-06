@@ -10,6 +10,7 @@ import InvoiceIndex from "@views/invoices/InvoiceIndex";
 import NewInvoice from "@views/invoices/NewInvoice";
 import InvoiceDetails from "@views/invoices/InvoiceDetails";
 import SignUp from "@views/unauthenticated/SignUp";
+import EditInvoice from "@views/invoices/EditInvoice";
 
 interface Props {}
 
@@ -23,8 +24,9 @@ const Router: React.FC<Props> = () => {
       <Route path="/clients/new" element={<NewClient />} />
       <Route path="/clients/:id" element={<ClientDetails />} />
       <Route path="/invoices" element={<InvoiceIndex />} />
-      <Route path="/invoices/:id" element={<InvoiceDetails />} />
       <Route path="/invoices/new" element={<NewInvoice />} />
+      <Route path="/invoices/:id" element={<InvoiceDetails />} />
+      <Route path="/invoices/:id/edit" element={<EditInvoice />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

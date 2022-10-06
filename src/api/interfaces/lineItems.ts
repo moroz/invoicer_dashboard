@@ -29,3 +29,7 @@ export interface LineItemParams {
   unitNetPrice: string | number;
   vatRate: VatRate;
 }
+
+export interface LineItem extends LineItemParams {
+  id: string;
+}

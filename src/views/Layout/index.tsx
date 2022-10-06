@@ -6,6 +6,7 @@ import styles from "./Layout.module.sass";
 import Sidebar from "./Sidebar";
 import { Helmet } from "react-helmet";
 import clsx from "clsx";
+import { APP_NAME } from "@/config";
 
 interface Props {
   children?: React.ReactNode;
@@ -44,8 +45,8 @@ const Layout: React.FC<Props> = ({
       <Helmet>
         <title>
           {title || ""}
-          {title ? "・" : ""}
-          {"Invoicer"}
+          {title ? " | " : ""}
+          {APP_NAME}
         </title>
       </Helmet>
       <Sidebar />

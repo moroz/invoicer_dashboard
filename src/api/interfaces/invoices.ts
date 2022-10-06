@@ -1,5 +1,5 @@
 import { Client, ClientParams } from "./clients";
-import { LineItemParams } from "./lineItems";
+import { LineItem, LineItemParams } from "./lineItems";
 
 export const PAYMENT_METHODS = {
   TRANSFER: "Bank transfer",
@@ -38,8 +38,12 @@ export const CURRENCIES = {
 export type Currency = keyof typeof CURRENCIES;
 
 export interface Invoice {
+  __typename?: "Invoice";
   id: string;
   invoiceNo: string;
+  dateOfIssue: string;
+  dateOfSale: string;
+  placeOfIssue: string;
   grossTotal: string;
   buyer: Client;
   seller: Client;
@@ -49,6 +53,7 @@ export interface Invoice {
   invoiceType: InvoiceType;
   insertedAt: string;
   updatedAt: string;
+  lineItems: LineItem[];
 }
 
 export interface InvoiceParams {
@@ -61,11 +66,11 @@ export interface InvoiceParams {
   locale: LocaleTuple;
   currency: Currency;
 
-  seller: ClientParams | null;
-  buyer: ClientParams | null;
+  seller?: ClientParams | null;
+  buyer?: ClientParams | null;
 
-  buyerId: string | null;
-  sellerId: string | null;
+  buyerId?: string | null;
+  sellerId?: string | null;
 
   lineItems: LineItemParams[];
 }

@@ -1,1 +1,1 @@
-export const APP_NAME = "Invoicer";
+export const APP_NAME = "faktury.wtf";
