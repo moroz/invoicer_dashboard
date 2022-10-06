@@ -4,6 +4,7 @@ import { ReactComponent as RefetchIcon } from "./rotate.svg";
 import { ReactComponent as PDFIcon } from "./file-pdf.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
 import { ReactComponent as XmarkIcon } from "./xmark.svg";
+import { ReactComponent as EditIcon } from "./file-pen.svg";
 
 export { default as IconButton, makeIconButton } from "./IconButton";
 export { default as SubmitButton } from "./SubmitButton";
@@ -34,4 +35,10 @@ export const DeleteButton = makeIconButton({
   overrideClassName: "is-danger",
   icon: XmarkIcon,
   defaultChildren: "Remove"
+});
+
+export const EditButton = makeIconButton({
+  overrideClassName: "is-info",
+  icon: EditIcon,
+  defaultChildren: "Edit"
 });
