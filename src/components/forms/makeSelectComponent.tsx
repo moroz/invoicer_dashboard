@@ -8,6 +8,7 @@ interface MakeSelectComponentParams {
 
 interface DerivedComponentProps extends React.HTMLProps<HTMLSelectElement> {
   label?: string;
+  placeholder?: string;
 }
 
 const makeSelectComponent = ({
@@ -20,10 +21,13 @@ const makeSelectComponent = ({
   }));
 
   return React.forwardRef(
-    ({ label, ...props }: DerivedComponentProps, ref: any) => {
+    ({ label, placeholder, ...props }: DerivedComponentProps, ref: any) => {
+      const normalizedOptions = placeholder
+        ? [{ label: placeholder, value: "" }, ...options]
+        : options;
       return (
         <Select
-          options={options}
+          options={normalizedOptions}
           label={label ?? defaultLabel}
           {...props}
           ref={ref}
