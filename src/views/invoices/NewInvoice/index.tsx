@@ -1,14 +1,15 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Layout from "@views/Layout";
 import { FormWrapper } from "@components/forms";
 import { useForm } from "react-hook-form";
-import { InvoiceParams, LineItemParams } from "@api/interfaces";
+import { InvoiceParams, LineItemParams, LocaleTuple } from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import { SubmitButton } from "@components/buttons";
 import { useCreateInvoiceMutation } from "@api/mutations";
 import { useNavigate } from "react-router-dom";
 import { setFormErrors } from "@/lib/formHelpers";
 import FormFields from "../FormFields";
+import { getLastWorkingDate } from "@api/nbpClient";
 
 interface Props {}
 
@@ -24,7 +25,8 @@ const NewInvoice: React.FC<Props> = () => {
     defaultValues: {
       dateOfIssue: today(),
       dateOfSale: today(),
-      lineItems: [EMPTY_LINE_ITEM]
+      lineItems: [EMPTY_LINE_ITEM],
+      exchangeRateEffectiveDate: getLastWorkingDate(today())
     }
   });
   const { setError } = methods;
@@ -32,7 +34,10 @@ const NewInvoice: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    async (params: InvoiceParams) => {
+    async (rawParams: InvoiceParams) => {
+      const params = { ...rawParams };
+      delete params.exchangeRateEffectiveDate;
+      params.locale = params.locale.filter(Boolean) as LocaleTuple;
       const res = await mutate({ variables: { params } });
       if (res.data?.result.success) {
         navigate(`/invoices/${res.data.result.data.id}`);

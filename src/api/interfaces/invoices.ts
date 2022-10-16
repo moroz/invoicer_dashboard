@@ -1,3 +1,4 @@
+import { NBPRate } from "@api/nbpClient";
 import { Client, ClientParams } from "./clients";
 import { LineItem, LineItemParams } from "./lineItems";
 
@@ -54,6 +55,8 @@ export interface Invoice {
   insertedAt: string;
   updatedAt: string;
   lineItems: LineItem[];
+  calculateExchangeRate?: boolean;
+  bankRate?: NBPRate;
 }
 
 export interface InvoiceParams {
@@ -65,6 +68,9 @@ export interface InvoiceParams {
   invoiceType: InvoiceType;
   locale: LocaleTuple;
   currency: Currency;
+  exchangeRateEffectiveDate?: string;
+  calculateExchangeRate?: boolean;
+  bankRate?: NBPRate;
 
   seller?: ClientParams | null;
   buyer?: ClientParams | null;

@@ -10,11 +10,12 @@ import LineItemEditor from "@components/LineItemEditor";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import ClientFormFields from "@views/clients/FormFields";
+import { ExchangeRateInputs } from "@components/forms";
 
 interface Props {}
 
 const FormFields: React.FC<Props> = () => {
-  const { register } = useFormContext();
+  const { register, watch } = useFormContext();
 
   return (
     <>
@@ -45,11 +46,19 @@ const FormFields: React.FC<Props> = () => {
           />
         </InputGroup>
         <InputGroup columns={4}>
+          <CurrencySelect required {...register("currency")} />
           <InvoiceTypeSelect required {...register("invoiceType")} />
           <PaymentMethodSelect required {...register("paymentMethod")} />
-          <LocaleSelect required {...register("locale.0")} />
-          <CurrencySelect required {...register("currency")} />
+          <InputGroup columns={2}>
+            <LocaleSelect required {...register("locale.0")} />
+            <LocaleSelect
+              label="2nd language:"
+              {...register("locale.1")}
+              placeholder="None"
+            />
+          </InputGroup>
         </InputGroup>
+        {watch("currency") !== "PLN" && <ExchangeRateInputs />}
       </section>
       <section className="columns mt-1">
         <div className="column">
