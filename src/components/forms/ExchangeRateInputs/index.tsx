@@ -8,8 +8,8 @@ interface Props {}
 
 const ExchangeRateInputs: React.FC<Props> = () => {
   const { register, watch, setValue } = useFormContext();
-  const showRates = watch("calculateExchangeRate");
-  const currency = watch("currency");
+  const showRates = watch("calculateExchangeRate", false);
+  const currency = watch("currency", "PLN");
   const date = watch("exchangeRateEffectiveDate");
   const { data, loading } = useExchangeRate(currency, date);
 
@@ -22,6 +22,8 @@ const ExchangeRateInputs: React.FC<Props> = () => {
   useEffect(() => {
     setValue("bankRate", data);
   }, [data]);
+
+  if (currency === "PLN") return null;
 
   return (
     <section className={styles.root}>

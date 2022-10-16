@@ -58,7 +58,7 @@ const FormFields: React.FC<Props> = () => {
             />
           </InputGroup>
         </InputGroup>
-        {watch("currency") !== "PLN" && <ExchangeRateInputs />}
+        <ExchangeRateInputs />
       </section>
       <section className="columns mt-1">
         <div className="column">
