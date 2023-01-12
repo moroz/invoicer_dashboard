@@ -90,26 +90,8 @@ export interface GetClientOptionsQueryResult {
   clients: PaginationPage<ClientOptionItem>;
 }
 
-export const useGetClientOptionsQuery = (type: ClientTemplateType) => {
-  const client = useApolloClient();
-  const getOptions = useCallback(
-    async (q: string) => {
-      const result = await client.query<
-        GetClientOptionsQueryResult,
-        PaginateClientsQueryVariables
-      >({
-        query: GET_CLIENT_OPTIONS_QUERY,
-        variables: {
-          params: {
-            templateType: type,
-            q
-          }
-        }
-      });
-      return result.data.clients.data;
-    },
-    [client]
+export const useGetClientOptionsQuery = (params: ClientFilterParams) =>
+  useQuery<GetClientOptionsQueryResult, PaginateClientsQueryVariables>(
+    GET_CLIENT_OPTIONS_QUERY,
+    { variables: { params } }
   );
-
-  return getOptions;
-};
