@@ -21,7 +21,8 @@ const OMIT_KEYS = [
   "insertedAt",
   "updatedAt",
   "buyerId",
-  "sellerId"
+  "sellerId",
+  "exchangeRateEffectiveDate"
 ];
 
 const EditInvoice: React.FC<Props> = () => {

@@ -1,5 +1,12 @@
 import { StandardPaginationParams } from "./common";
 
+enum TemplateType {
+  Buyer = "BUYER",
+  Seller = "SELLER"
+}
+
+export type ClientTemplateType = TemplateType | `${TemplateType}`;
+
 export interface Client {
   id: string;
   name: string;
@@ -10,8 +17,14 @@ export interface Client {
   bankName: string | null;
   bicCode: string | null;
   accountNo: string | null;
+  templateType: ClientTemplateType;
+  isDefaultTemplate: boolean;
   insertedAt: string;
   updatedAt: string;
+}
+
+export interface ClientOptionItem extends Client {
+  value: string;
 }
 
 export interface ClientParams {
@@ -23,6 +36,10 @@ export interface ClientParams {
   bankName?: string | null;
   bicCode?: string | null;
   accountNo?: string | null;
+  templateType: ClientTemplateType;
+  isDefaultTemplate: boolean;
 }
 
-export interface ClientFilterParams extends StandardPaginationParams {}
+export interface ClientFilterParams extends StandardPaginationParams {
+  templateType?: ClientTemplateType | null;
+}

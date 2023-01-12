@@ -63,11 +63,15 @@ const FormFields: React.FC<Props> = () => {
       <section className="columns mt-1">
         <div className="column">
           <h2 className="title is-4">Seller</h2>
-          <ClientFormFields prefix="seller." showBankFields />
+          <ClientFormFields
+            prefix="seller."
+            showBankFields
+            templateType="SELLER"
+          />
         </div>
         <div className="column">
           <h2 className="title is-4">Buyer</h2>
-          <ClientFormFields prefix="buyer." />
+          <ClientFormFields prefix="buyer." templateType="BUYER" />
         </div>
       </section>
       <LineItemEditor />
