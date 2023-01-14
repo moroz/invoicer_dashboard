@@ -62,3 +62,35 @@ export const useUpdateInvoiceMutation = () =>
   useMutation<UpdateInvoiceMutationResult, UpdateInvoiceMutationVariables>(
     UPDATE_INVOICE
   );
+
+export const DELETE_INVOICE = gql`
+  mutation DeleteInvoice($id: ID!) {
+    result: deleteInvoice(id: $id) {
+      success
+      errors {
+        key
+        message
+      }
+    }
+  }
+`;
+
+export interface DeleteInvoiceMutationResult {
+  result: MutationResult<null>;
+}
+
+export interface DeleteInvoiceMutationVariables {
+  id: string;
+}
+
+export const useDeleteInvoiceMutation = (id: string) =>
+  useMutation<DeleteInvoiceMutationResult, DeleteInvoiceMutationVariables>(
+    DELETE_INVOICE,
+    {
+      variables: {
+        id
+      },
+      refetchQueries: ["PaginateInvoices"],
+      awaitRefetchQueries: true
+    }
+  );
