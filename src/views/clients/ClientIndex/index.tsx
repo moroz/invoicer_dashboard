@@ -40,6 +40,7 @@ const ClientIndex: React.FC<Props> = () => {
           <DataTable clickable>
             <thead>
               <tr>
+                <th>Template type</th>
                 <th>Name</th>
                 <th>VAT ID</th>
               </tr>
@@ -47,6 +48,7 @@ const ClientIndex: React.FC<Props> = () => {
             <tbody>
               {entries?.map((client) => (
                 <tr key={client.id} onClick={goTo(client)}>
+                  <td>{client.templateType}</td>
                   <td>{client.name}</td>
                   <td>{client.vatId}</td>
                 </tr>

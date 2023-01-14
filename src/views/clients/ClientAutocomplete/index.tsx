@@ -2,44 +2,16 @@ import { ClientOptionItem, ClientTemplateType } from "@api/interfaces";
 import { useGetClientOptionsQuery } from "@api/queries";
 import useClickOutside from "@hooks/useClickOutside";
 import clsx from "clsx";
-import React, { HTMLProps, useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import styles from "./ClientAutocomplete.module.sass";
+import ClientOption from "./ClientOption";
 
 interface Props {
   type: ClientTemplateType;
   name: string;
   onSelect: (client: ClientOptionItem) => void;
 }
-
-interface OptionProps extends HTMLProps<HTMLLIElement> {
-  client: ClientOptionItem;
-}
-
-const ClientOption: React.FC<OptionProps> = ({
-  client,
-  className,
-
-  ...rest
-}) => {
-  return (
-    <li key={client.value} className={clsx(styles.option, className)} {...rest}>
-      <span className={styles.name}>{client.name}</span>{" "}
-      {client.vatId ? (
-        <span className={styles.vatId}>({client.vatId})</span>
-      ) : (
-        ""
-      )}
-      <p className={styles.address}>
-        {client.addressLine ? (
-          <span className={styles.addressLine}>{client.addressLine}</span>
-        ) : (
-          ""
-        )}
-      </p>
-    </li>
-  );
-};
 
 const ClientAutocomplete: React.FC<Props> = ({ onSelect, type, name }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
