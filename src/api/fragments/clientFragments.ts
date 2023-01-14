@@ -10,5 +10,8 @@ export const CLIENT_DETAILS = gql`
     postalCode
     insertedAt
     updatedAt
+    bankName
+    accountNo
+    bicCode
   }
 `;

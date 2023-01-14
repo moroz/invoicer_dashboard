@@ -17,9 +17,11 @@ const NewClient: React.FC<Props> = () => {
       templateType: "BUYER"
     }
   });
-  const { register, setError } = methods;
+  const { register, setError, watch } = methods;
   const [mutate] = useCreateClientMutation();
   const navigate = useNavigate();
+
+  const templateType = watch("templateType", "BUYER");
 
   const onSubmit = useCallback(
     async (params: ClientParams) => {
@@ -48,7 +50,7 @@ const NewClient: React.FC<Props> = () => {
             {...register("templateType")}
           />
         </RadioGroup>
-        <FormFields showBankFields />
+        <FormFields showBankFields={templateType === "SELLER"} />
         <SubmitButton>Create client</SubmitButton>
       </FormWrapper>
     </Layout>

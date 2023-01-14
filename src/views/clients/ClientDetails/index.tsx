@@ -14,27 +14,65 @@ const ClientDetails: React.FC<Props> = () => {
   if (loading) return <LayoutLoader />;
   if (!client) return <NotFound />;
 
+  const hasAddress = [client.addressLine, client.city, client.postalCode].some(
+    Boolean
+  );
+
+  const hasBankInfo = [client.bankName, client.accountNo, client.bicCode].some(
+    Boolean
+  );
+
   return (
-    <Layout
-      title={client.name}
-      subtitle={`Client details`}
-      backUrl="/clients"
-    >
+    <Layout title={client.name} subtitle={`Client details`} backUrl="/clients">
       <div className="card">
         <div className="card-content">
           <p>
-            <strong>VAT ID:</strong>
-            <br />
-            {client.vatId}
+            <strong>VAT ID:</strong> {client.vatId}
           </p>
-          <section>
-            <strong>Address:</strong>
-            <p>
-              {client.addressLine}
-              <br />
-              {client.postalCode} {client.city}
-            </p>
-          </section>
+          {hasAddress && (
+            <>
+              <strong>Address:</strong>
+              <p>
+                {client.addressLine}
+                <br />
+                {client.city}, {client.postalCode}
+              </p>
+            </>
+          )}
+          {hasBankInfo && (
+            <>
+              <strong>Bank info:</strong>
+              <p>
+                {client.bankName ? (
+                  <>
+                    <strong>Bank: </strong>
+                    {client.bankName}
+                    <br />
+                  </>
+                ) : (
+                  ""
+                )}
+                {client.accountNo ? (
+                  <>
+                    <strong>Account number: </strong>
+                    {client.accountNo}
+                    <br />
+                  </>
+                ) : (
+                  ""
+                )}
+                {client.bicCode ? (
+                  <>
+                    <strong>BIC/SWIFT code: </strong>
+                    {client.bicCode}
+                    <br />
+                  </>
+                ) : (
+                  ""
+                )}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </Layout>
