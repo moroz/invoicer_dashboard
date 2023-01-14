@@ -1,6 +1,6 @@
-import { ClientTemplateType } from "@api/interfaces";
+import { ClientOptionItem, ClientTemplateType } from "@api/interfaces";
 import { InputField, InputGroup } from "@components/forms";
-import React from "react";
+import React, { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import ClientAutocomplete from "../ClientAutocomplete";
 
@@ -10,17 +10,39 @@ interface Props {
   templateType?: ClientTemplateType;
 }
 
+export const AUTOCOMPLETABLE_FIELDS: (keyof ClientOptionItem)[] = [
+  "name",
+  "vatId",
+  "addressLine",
+  "city",
+  "accountNo",
+  "postalCode"
+];
+
 const FormFields: React.FC<Props> = ({
   prefix = "",
   showBankFields = false,
   templateType = "BUYER"
 }) => {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
+
+  const onSelectClientTemplate = useCallback(
+    (prefix: "seller." | "buyer.") => (client: ClientOptionItem) => {
+      AUTOCOMPLETABLE_FIELDS.forEach((field) => {
+        setValue(`${prefix}${field}` as any, client[field] || "");
+      });
+    },
+    [setValue]
+  );
 
   return (
     <>
       {prefix ? (
-        <ClientAutocomplete type={templateType} />
+        <ClientAutocomplete
+          name={`${prefix}.name`}
+          type={templateType}
+          onSelect={onSelectClientTemplate(prefix as any)}
+        />
       ) : (
         <InputField
           autoFocus

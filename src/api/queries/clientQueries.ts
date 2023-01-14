@@ -24,6 +24,8 @@ export const PAGINATE_CLIENTS = gql`
         id
         name
         vatId
+        templateType
+        isDefaultTemplate
       }
     }
   }

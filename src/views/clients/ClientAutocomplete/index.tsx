@@ -1,11 +1,15 @@
 import { ClientOptionItem, ClientTemplateType } from "@api/interfaces";
 import { useGetClientOptionsQuery } from "@api/queries";
+import useClickOutside from "@hooks/useClickOutside";
 import clsx from "clsx";
-import React, { ChangeEvent, HTMLProps, useCallback, useState } from "react";
+import React, { HTMLProps, useCallback, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import styles from "./ClientAutocomplete.module.sass";
 
 interface Props {
   type: ClientTemplateType;
+  name: string;
+  onSelect: (client: ClientOptionItem) => void;
 }
 
 interface OptionProps extends HTMLProps<HTMLLIElement> {
@@ -15,6 +19,7 @@ interface OptionProps extends HTMLProps<HTMLLIElement> {
 const ClientOption: React.FC<OptionProps> = ({
   client,
   className,
+
   ...rest
 }) => {
   return (
@@ -36,38 +41,47 @@ const ClientOption: React.FC<OptionProps> = ({
   );
 };
 
-const ClientAutocomplete: React.FC<Props> = ({ type }) => {
-  const [value, setValue] = useState("");
+const ClientAutocomplete: React.FC<Props> = ({ onSelect, type, name }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const { register, watch } = useFormContext();
+
+  const value = watch(name, "");
+
   const [focused, setFocused] = useState(false);
   const { previousData, data } = useGetClientOptionsQuery({
     templateType: type,
     q: value
   });
 
+  useClickOutside(wrapperRef, () => setFocused(false));
+
   const options = (data ?? previousData)?.clients.data ?? [];
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
+  const onSelectOption = useCallback(
+    (option: ClientOptionItem) => () => {
+      onSelect(option);
+      setFocused(false);
     },
-    [setValue]
+    [setFocused, onSelect]
   );
 
   return (
-    <div className={clsx(styles.root, "field")}>
+    <div className={clsx(styles.root, "field")} ref={wrapperRef}>
       <label className={"label"}>Client</label>
       <div className={styles.wrapper}>
         <input
           className="input"
-          value={value}
-          onChange={onChange}
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          {...register(name)}
         />
         {focused && (
           <ul className={styles.options}>
             {options.map((option) => (
-              <ClientOption client={option} key={option.value} />
+              <ClientOption
+                client={option}
+                key={option.value}
+                onClick={onSelectOption(option)}
+              />
             ))}
           </ul>
         )}

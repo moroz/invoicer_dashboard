@@ -2,7 +2,12 @@ import React, { useCallback, useEffect } from "react";
 import Layout from "@views/Layout";
 import { FormWrapper } from "@components/forms";
 import { useForm } from "react-hook-form";
-import { InvoiceParams, LineItemParams, LocaleTuple } from "@api/interfaces";
+import {
+  ClientOptionItem,
+  InvoiceParams,
+  LineItemParams,
+  LocaleTuple
+} from "@api/interfaces";
 import { today } from "@/lib/dateHelpers";
 import { SubmitButton } from "@components/buttons";
 import { useCreateInvoiceMutation } from "@api/mutations";
@@ -10,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { setFormErrors } from "@/lib/formHelpers";
 import FormFields from "../FormFields";
 import { getLastWorkingDate } from "@api/nbpClient";
+import { AUTOCOMPLETABLE_FIELDS } from "@views/clients/ClientAutocomplete";
 
 interface Props {}
 
