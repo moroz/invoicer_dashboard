@@ -27,7 +27,7 @@ const ClientIndex: React.FC<Props> = () => {
 
   return (
     <Layout
-      title="Clients"
+      title="Client templates"
       actions={
         <ButtonGroup>
           <RefetchButton onClick={() => refetch()} />

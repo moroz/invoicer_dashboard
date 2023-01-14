@@ -32,7 +32,7 @@ const NewClient: React.FC<Props> = () => {
   return (
     <Layout title="New Client" backUrl="/clients">
       <FormWrapper {...methods} onSubmit={onSubmit}>
-        <FormFields />
+        <FormFields showBankFields />
         <SubmitButton>Create client</SubmitButton>
       </FormWrapper>
     </Layout>
