@@ -82,6 +82,8 @@ export const GET_CLIENT_OPTIONS_QUERY = gql`
         city
         postalCode
         isDefaultTemplate
+        bicCode
+        bankName
         accountNo
       }
     }
@@ -95,5 +97,5 @@ export interface GetClientOptionsQueryResult {
 export const useGetClientOptionsQuery = (params: ClientFilterParams) =>
   useQuery<GetClientOptionsQueryResult, PaginateClientsQueryVariables>(
     GET_CLIENT_OPTIONS_QUERY,
-    { variables: { params } }
+    { variables: { params }, nextFetchPolicy: "cache-and-network" }
   );

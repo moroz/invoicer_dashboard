@@ -16,7 +16,9 @@ export const AUTOCOMPLETABLE_FIELDS: (keyof ClientOptionItem)[] = [
   "addressLine",
   "city",
   "accountNo",
-  "postalCode"
+  "postalCode",
+  "bicCode",
+  "bankName"
 ];
 
 const FormFields: React.FC<Props> = ({

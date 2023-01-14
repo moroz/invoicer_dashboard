@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import Layout from "@views/Layout";
 import { useForm } from "react-hook-form";
 import { ClientParams } from "@api/interfaces";
-import { FormWrapper } from "@components/forms";
+import { FormWrapper, RadioButton, RadioGroup } from "@components/forms";
 import { SubmitButton } from "@components/buttons";
 import { useCreateClientMutation } from "@api/mutations";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,12 @@ import FormFields from "../FormFields";
 interface Props {}
 
 const NewClient: React.FC<Props> = () => {
-  const methods = useForm<ClientParams>();
-  const { setError } = methods;
+  const methods = useForm<ClientParams>({
+    defaultValues: {
+      templateType: "BUYER"
+    }
+  });
+  const { register, setError } = methods;
   const [mutate] = useCreateClientMutation();
   const navigate = useNavigate();
 
@@ -32,6 +36,18 @@ const NewClient: React.FC<Props> = () => {
   return (
     <Layout title="New Client" backUrl="/clients">
       <FormWrapper {...methods} onSubmit={onSubmit}>
+        <RadioGroup label="Template type">
+          <RadioButton
+            label="Buyer"
+            value="BUYER"
+            {...register("templateType")}
+          />
+          <RadioButton
+            label="Seller"
+            value="SELLER"
+            {...register("templateType")}
+          />
+        </RadioGroup>
         <FormFields showBankFields />
         <SubmitButton>Create client</SubmitButton>
       </FormWrapper>

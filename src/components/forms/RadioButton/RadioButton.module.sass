@@ -6,8 +6,8 @@
   display: inline-flex
   align-items: center
   line-height: 1.5rem
-  height: $input-height
-  border: 1px solid $primary
+  height: $input-height + .25rem
+  border: 1px solid #000
   border-radius: 5px
   cursor: pointer
 
@@ -21,7 +21,7 @@
     width: $custom-control-size
     height: $custom-control-size
     border-radius: 50%
-    border: 1px solid $primary
+    border: 1px solid #000
     margin: 0 .5rem 0 .75rem
     position: relative
 
@@ -39,4 +39,4 @@
 
     &:checked
       &::after
-        background: $primary
+        background: darken($primary, 10%)

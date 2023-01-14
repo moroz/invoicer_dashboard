@@ -9,7 +9,7 @@ interface Props extends HTMLProps<HTMLFieldSetElement> {
 const RadioGroup: React.FC<Props> = ({ label, children, ...rest }) => {
   return (
     <fieldset {...rest} className={clsx("field", styles.root)}>
-      {label ? <legend className="legend">{label}</legend> : null}
+      {label ? <legend className="legend label">{label}</legend> : null}
       {children}
     </fieldset>
   );
