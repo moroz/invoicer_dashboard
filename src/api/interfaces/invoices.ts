@@ -57,6 +57,7 @@ export interface Invoice {
   lineItems: LineItem[];
   calculateExchangeRate?: boolean;
   bankRate?: NBPRate;
+  memo?: string;
 }
 
 export interface InvoiceParams {
@@ -71,6 +72,7 @@ export interface InvoiceParams {
   exchangeRateEffectiveDate?: string;
   calculateExchangeRate?: boolean;
   bankRate?: NBPRate;
+  memo?: string;
 
   seller?: ClientParams | null;
   buyer?: ClientParams | null;

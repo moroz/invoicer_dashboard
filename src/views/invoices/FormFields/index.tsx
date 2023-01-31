@@ -4,7 +4,8 @@ import {
   InvoiceTypeSelect,
   PaymentMethodSelect,
   LocaleSelect,
-  CurrencySelect
+  CurrencySelect,
+  Textarea
 } from "@components/forms";
 import LineItemEditor from "@components/LineItemEditor";
 import React from "react";
@@ -59,6 +60,7 @@ const FormFields: React.FC<Props> = () => {
           </InputGroup>
         </InputGroup>
         <ExchangeRateInputs />
+        <Textarea label="Memo:" rows={3} {...register("memo")} />
       </section>
       <section className="columns mt-1">
         <div className="column">

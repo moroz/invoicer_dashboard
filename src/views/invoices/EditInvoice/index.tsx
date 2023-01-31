@@ -47,7 +47,8 @@ const EditInvoice: React.FC<Props> = () => {
         ...omit(rest, OMIT_KEYS),
         seller: omit(seller, OMIT_KEYS),
         buyer: omit(buyer, OMIT_KEYS),
-        lineItems: lineItems.map((item) => omit(item, OMIT_KEYS))
+        lineItems: lineItems.map((item) => omit(item, OMIT_KEYS)),
+        locale: rawParams.locale.filter(Boolean)
       };
       const result = await mutate({ variables: { id: id!, params } });
       if (result.data?.result.success) {
